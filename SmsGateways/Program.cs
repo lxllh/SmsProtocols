@@ -19,14 +19,14 @@ namespace SmsGateways
     {
         private static bool IsClient
         {
-            get { return Program.GetArgumentAsBool("client"); }
+            get { return GetArgumentAsBool("client"); }
         }
 
         private static bool ShouldUseCMPP
         {
             get
             {
-                var cmpp = Program.GetAppSettingAsBoolean("cmpp");
+                var cmpp = GetAppSettingAsBoolean("cmpp");
                 if (cmpp) return cmpp;
                 if (!ShouldUseSGIP && !ShouldUseSMGP) return true;
                 return false;
@@ -35,12 +35,12 @@ namespace SmsGateways
 
         private static bool ShouldUseSGIP
         {
-            get { return Program.GetArgumentAsBool("sgip"); }
+            get { return GetArgumentAsBool("sgip"); }
         }
 
         private static bool ShouldUseSMGP
         {
-            get { return Program.GetArgumentAsBool("smgp"); }
+            get { return GetArgumentAsBool("smgp"); }
         }
 
         static void Main(string[] args)
@@ -49,39 +49,39 @@ namespace SmsGateways
             {
                 if (ShouldUseCMPP)
                 {
-                    Program.TestCmppChannel();
+                    TestCmppChannel();
                 }
                 else if (ShouldUseSGIP)
                 {
-                    Program.TestSgipChannel();
+                    TestSgipChannel();
                 }
                 else if (ShouldUseSMGP)
                 {
-                    Program.TestSmgpChannel();
+                    TestSmgpChannel();
                 }
                 return;
             }
 
             if (ShouldUseCMPP)
             {
-                Program.RunCmppServer();
+                RunCmppServer();
             }
             else if (ShouldUseSGIP)
             {
-                Program.RunSgipServer();
+                RunSgipServer();
             }
             else if (ShouldUseSMGP)
             {
-                Program.RunSmgpServer();
+                RunSmgpServer();
             }
 
         }
 
         private static void RunCmppServer()
         {
-            var cmppConfigurations = Program.CmppServerConfigurations;
+            var cmppConfigurations = CmppServerConfigurations;
 
-            var isSimulated = Program.IsSimulated;
+            var isSimulated = IsSimulated;
 
             CmppSmsServer server1 = null;
             if (isSimulated)
